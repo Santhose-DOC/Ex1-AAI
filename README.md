@@ -9,33 +9,60 @@
 To create a bayesian Network for the given dataset in Python
 
 ## Algorithm:
-Step 1 : Import necessary libraries: pandas, networkx, matplotlib.pyplot, Bbn, Edge, EdgeType, BbnNode, Variable, EvidenceBuilder, InferenceController<br/>
 
-Step 2 : Set pandas options to display more columns<br/>
+### Step 1
+Import the required libraries such as `pandas`, `networkx`, `matplotlib.pyplot`, and Bayesian Network modules (`DiscreteBayesianNetwork`, `MaximumLikelihoodEstimator`, `VariableElimination`) from `pgmpy`.
 
-Step 3 : Read in weather data from a CSV file using pandas<br/>
+### Step 2
+Set pandas display options (optional) to allow better visibility of dataset columns during analysis.
 
-Step 4 : Remove records where the target variable RainTomorrow has missing values<br/>
+### Step 3
+Load the weather dataset from a CSV file using the pandas `read_csv()` function.
 
-Step 5 : Fill in missing values in other columns with the column mean<br/>
+### Step 4
+Remove all records where the target variable **RainTomorrow** contains missing values to ensure valid training data.
 
-Step 6 : Create bands for variables that will be used in the model (Humidity9amCat, Humidity3pmCat, and WindGustSpeedCat)<br/>
+### Step 5
+Identify numeric columns in the dataset and replace missing values with their respective column mean values.
 
-Step 7 : Define a function to calculate probability distributions, which go into the Bayesian Belief Network (BBN)<br/>
+### Step 6
+Discretize continuous variables into categorical bands:
+- Convert `WindGustSpeed` into **Low**, **Medium**, and **High**
+- Convert `Humidity9am` into **Low** and **High**
+- Convert `Humidity3pm` into **Low** and **High**
 
-Step 8 : Create BbnNode objects for Humidity9amCat, Humidity3pmCat, WindGustSpeedCat, and RainTomorrow, using the probs() function to calculate their probabilities<br/>
+### Step 7
+Create a new dataset containing only the selected categorical variables:
+`WindGustSpeedCat`, `Humidity9amCat`, `Humidity3pmCat`, and `RainTomorrow`.
+Convert all these variables into string format.
 
-Step 9 : Create a Bbn object and add the BbnNode objects to it, along with edges between the nodes<br/>
+### Step 8
+Define the Bayesian Network structure using `DiscreteBayesianNetwork` by specifying the dependency relationships:
+- `Humidity9amCat → Humidity3pmCat`
+- `Humidity3pmCat → RainTomorrow`
+- `WindGustSpeedCat → RainTomorrow`
 
-Step 10 : Convert the BBN to a join tree using the InferenceController<br/>
+### Step 9
+Train the Bayesian Network using **Maximum Likelihood Estimation (MLE)** to learn the Conditional Probability Tables (CPTs).
 
-Step 11 : Set node positions for the graph<br/>
+### Step 10
+Construct a directed graph using NetworkX based on the Bayesian Network structure.
 
-Step 12 : Set options for the graph appearance<br/>
+### Step 11
+Visualize the Bayesian Network graph by setting node positions, colors, and labels using Matplotlib.
 
-Step 13 : Generate the graph using networkx<br/>
+### Step 12
+Initialize the **Variable Elimination** inference method for probabilistic reasoning on the trained model.
 
-Step 14 : Update margins and display the graph using matplotlib.pyplot<br/>
+### Step 13
+Perform inference to compute the probability of **RainTomorrow** given evidence on:
+- `Humidity3pmCat`
+- `WindGustSpeedCat`
+
+### Step 14
+Display the inference results and the Bayesian Network diagram.
+
+---
 
 
 ## Program:
